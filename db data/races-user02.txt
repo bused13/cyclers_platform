@@ -1,0 +1,150 @@
+{
+  "_id": "user02",
+  "_rev": "1-0be2008e1614fa576b0dcca9b24a1eed",
+  "races": [
+    {
+      "origin": [
+        39.76602,
+        -104.827908
+      ],
+      "destination": [
+        39.635496,
+        -104.901352
+      ],
+      "date": "2019-03-01",
+      "time": "10:40",
+      "duration": 91,
+      "distance": 15.8,
+      "avg_heartrate": 172,
+      "type": "Road Race"
+    },
+    {
+      "origin": [
+        39.78066,
+        -104.98109
+      ],
+      "destination": [
+        39.739749,
+        -104.940196
+      ],
+      "date": "2019-03-03",
+      "time": "09:35",
+      "duration": 44,
+      "distance": 5.2,
+      "avg_heartrate": 165,
+      "type": "Daily Commute"
+    },
+    {
+      "origin": [
+        39.655802,
+        -105.011002
+      ],
+      "destination": [
+        39.697664,
+        -105.173615
+      ],
+      "date": "2019-03-05",
+      "time": "09:00",
+      "duration": 104,
+      "distance": 13.2,
+      "avg_heartrate": 166,
+      "type": "moutanin biking"
+    },
+    {
+      "origin": [
+        40.299708,
+        -105.837248
+      ],
+      "destination": [
+        40.394243,
+        -105.677571
+      ],
+      "date": "2019-03-08",
+      "time": "13:05",
+      "duration": 225,
+      "distance": 26.2,
+      "avg_heartrate": 170,
+      "type": "Mountain Biking"
+    },
+    {
+      "origin": [
+        44.742023,
+        -110.677275
+      ],
+      "destination": [
+        44.725924,
+        -110.699294
+      ],
+      "date": "2019-03-13",
+      "time": "14:35",
+      "duration": 8,
+      "distance": 1.7,
+      "avg_heartrate": 169,
+      "type": "BMX Racing"
+    },
+    {
+      "origin": [
+        48.500958,
+        -111.866041
+      ],
+      "destination": [
+        48.981349,
+        -111.963418
+      ],
+      "date": "2019-03-17",
+      "time": "11:40",
+      "duration": 223,
+      "distance": 47.2,
+      "avg_heartrate": 182,
+      "type": "ultra-distance cycle race"
+    },
+    {
+      "origin": [
+        39.739447,
+        -104.989705
+      ],
+      "destination": [
+        39.744709,
+        -104.932729
+      ],
+      "date": "2019-03-18",
+      "time": "18:25",
+      "duration": 37,
+      "distance": 4.1,
+      "avg_heartrate": 169,
+      "type": "Daily Commute"
+    },
+    {
+      "origin": [
+        39.687113,
+        -104.863497
+      ],
+      "destination": [
+        39.63806,
+        -104.906086
+      ],
+      "date": "2019-03-20",
+      "time": "16:15",
+      "duration": 38,
+      "distance": 6.3,
+      "avg_heartrate": 165,
+      "type": "Daily Commute"
+    },
+    {
+      "origin": [
+        39.688758,
+        -105.478444
+      ],
+      "destination": [
+        39.561209,
+        -105.37753
+      ],
+      "date": "2019-03-25",
+      "time": "11:23",
+      "duration": 143,
+      "distance": 21.6,
+      "avg_heartrate": 178,
+      "type": "BMX Racing"
+    }
+  ]
+}

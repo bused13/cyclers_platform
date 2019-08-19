@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+  <script  src="js/index.js"></script>
+  <title>Route Planner</title>
+
+</head>
+<!-- The code for weather is adapted from https://codepen.io/opensesame/pen/ppYojp -->
+<body>
+		<div class="border" style="margin-left:0px;">
+				<div class="header">
+				  <div class="search">
+					<div class="magnifyingGlass">
+					  <i class="fa fa-search" aria-hidden="true"></i>
+					</div>
+					<input id="autocomplete" placeholder="city name" type="text" size="17"/>
+				  </div>
+				  <div class="getLocal" id="showWeather">
+					  <div class="locationPin">
+						<i class="fa fa-map-marker"></i>
+					  </div>
+					  <div class="localWeatherButtonText">
+						<p>Local<br>Weather</p>
+					  </div>
+				  </div>
+				  <div class="content">
+				<div class="location">
+				  <div class="city"></div>
+				  </div>
+				<div class="date">
+				  <div class="time">
+				  </div>
+				  <div class="dayMonth">
+				  </div>
+				</div>
+				<div class="currentConditions">
+				   <div class="summaryContainer">
+					<div class="summary">
+					</div>
+				  </div>
+				  <div class="tempAndIcon">
+					<div id="tempContainer">
+					  <div class="temp">
+					  </div>
+					  <div class="tempUnit">
+					  </div>
+					</div>
+					<div class="icon">
+					</div>
+				</div>
+			  </div>
+			</div>
+				<div class="forecastContainer" id="forecastContainer">
+				<div class="forecast" id="forecast">
+				  <div class="forecastTitle">
+					 Forecast:
+				  </div>
+				  <div class="hourlyandFiveDayContainer">
+					<div class="tempChart">
+					  <canvas id="myTempChart"></canvas>
+					</div>
+					<div class="caret" id="caretLeft"><i class="fa fa-caret-left"></i></div>
+					 <div class="slider">
+					   <div class="currentSlide" id="currentSlide"></div>
+					 </div>
+					 <div class="caret" id="caretRight"><i class="fa fa-caret-right"></i></div>
+				  </div>
+				   <div class="detailCategories">
+					   <div class="detCat" id="CloudCover"><i class="wi wi-day-cloudy-high"></i></div>
+					   <div class="detCat" id="PrecipProbability"><i class="wi wi-rain"></i></div>
+					   <div class="detCat" id="PrecipIntensity"><i class="wi wi-rain"></i></div>
+					   <div class="detCat" id="Humidity"><i class="wi wi-humidity"></i></div>
+					   <div class="detCat" id="WindSpeed"><i class="wi wi-strong-wind"></i></div>
+					   <div class="detCat" id="Visibility"><i class="fa fa-binoculars"></i></div>
+					   <div class="detCat" id="Pressure"><i class="wi wi-barometer"></i></div>
+					   <div class="detCat" id="Ozone"><div class="ozone"><div class="ozoneO">O</div><div class="ozone3">3</div></div></div>
+				  </div>
+				  <div class="hourlyandFiveDayDetails">
+					 <div class="detailChart hide">
+					   <canvas id="myDetailChart"></canvas>
+					 </div>
+				  </div>
+				  <div class="caretDown"><i class="fa fa-caret-down"></i></div>
+				</div>
+				</div>
+				</div>
+
+				<!-- The code for map is adapted from https://github.com/Zivi/FlattestRoute -->
+				<div class="mapContainer">
+				  <div id="map">
+				  </div>
+				</div>
+			  </div>
+			  </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-8">
+				<h1>Route Planner</h1>
+			</div>
+		</div>
+		<form id="routes">
+		<div id="target" class="row place-inputs">
+			<div class="col-sm-4">
+					<div class="place-input">
+							<input id="from" type="text" placeholder="Starting Point">
+							</div>
+			</div>
+			<div class="col-sm-1"><div id="from-to-switcher"></div></div>
+			<div class="col-sm-4">
+					<div class="place-input">
+					<input id="to" type="text" placeholder="Destination">
+				</div>
+			</div>
+			<div class="col-sm-3">
+					<select  id="measurement-mode" style="margin: 0px">
+							<option value="miles">Miles</option>
+							<option value="km">Kilometres</option>
+						</select>
+						<select class="form-control" id="travel-mode">
+								<option>Bicycling</option>
+							</select>
+			</div>
+			<div class="row place-inputs">
+
+					<div class="col-sm-4">
+							<button class="btn btn-primary" type="submit" id="go">Go</button>
+							<a href="profile.html" button class="btn btn-primary" type="submit" id="profileBtn" >Back to Profile</a>
+
+					</div>
+			</div>
+		</form>
+
+		</div>
+		<div class="row">
+			<div>
+				<div class="col-md-6" id="map-canvas">
+
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12">
+				<div class="chart hide col-sm-6" id="elevation_chart"></div>
+
+				<div class="col-xs-12 col-sm-4">
+					<div class="row-travel-info">
+						<b>Distance:</b>
+						<span id="distance"></span>
+					</div>
+					<div class="row-travel-info">
+							<b>Travel Time:</b>
+							<span id="travel-time"></span>
+						</div>
+					</div>
+						<div class="chart hide col-sm-6" id="slope_chart"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYgbAra4lExeoIC-2Qog9yvp12gatHY5U&callback=initGoogleAPI&libraries=places,geometry;"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	 crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="../frontend/Profile_CSS/profile.css">
+
+    <!--Bootstrap CSS CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+        integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+
+    <!--Map rendering stylesheet - important!-->
+    <link rel="stylesheet" type="text/css" href="css/main-profile.css?ver=3">
+
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+
+    <!--Font Awesome Icons Stylesheet-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <!--Weather Icons CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css">
+
+
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
+
+    <!--Fav Icon-->
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/8/86/Cycling_%28road%29_pictogram.svg" type="image/x-icon"/>
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Calendar Rendering-->
+    <script src="http://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
+
+    <title>CS5003 Practical 3</title>
+</head>
+
+<body>
+    <div class="container" id="map">
+        <div class="row">
+            <div class="col" style="float:left">
+                <!-- <h2 id=h2>My Profile</h2> -->
+                <div id="avatar" style="    padding-top: 20px;">
+                    <img src="../frontend/Profile_CSS/boy-1.png" alt="Avatar" class="avatar" style="width:20%">
+                </div>
+                <!-- TODO change to photo in the database -->
+                <br>
+                <div id="nameInfo"><b>Name:</b></div>
+                <div id="ageInfo"><b>Age:</b></div>
+                <div id="weightInfo"><b>Weight:</b></div>
+                <div id="heightInfo"><b>Height:</b></div>
+                <div id="raceNoInfo"><b>Number of Races:</b></div>
+                <div id="maxHR"><b>Maximum Heart Rate:</b></div>
+                <div id="lastRaceInfo"><b>Last Race:</b></div>
+
+            </div>
+            <div class="yui3-skin-sam yui3-g" id="calendar">
+                <!-- You need this skin class -->
+
+                <div id="leftcolumn" class="yui3-u">
+                    <!-- Container for the calendar -->
+                    <div id="mycalendar"></div>
+                </div>
+                <div id="rightcolumn" class="yui3-u">
+                    <div id="links" style="padding-left:20px;">
+                        <!-- The buttons are created simply by assigning the correct CSS class -->
+                        <!-- <button id="togglePrevMonth" class="yui3-button">Toggle Previous Month's Dates</button><br>
+                        <button id="toggleNextMonth" class="yui3-button">Toggle Next Month's Dates</button><br> -->
+                        <b>Date:</b> <span id="date"></span>
+                        <br>
+                        <b>Time:</b> <span id="time"></span>
+                        <br>
+                        <b>Duration:</b> <span id="duration"></span>
+                        <br>
+                        <b>Distance:</b> <span id="newDistance"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="clear:both">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6" id="map-canvas"></div>
+    <br>
+    <div id="myBtns">
+        <a href="history.html" button class="btn btn-primary" type="submit" id="historyBtn">Race History</a>
+        <a href="index.html" button class="btn btn-primary" type="submit" id="plannerBtn">Route Planner</a>
+        <a href="addRace.html" button class="btn btn-primary" type="submit" id="addRaceBtn">Add Race</a>
+        <a href="scoreboard.html" button class="btn btn-primary" type="submit" id="scoreboard">Scoreboard</a>
+
+    </div>
+    <div style="visibility:hidden; z-index:-999; height: 0%">
+    <div id="elevation_chart"></div>
+    <div id="slope_chart"></div>
+    </div>
+
+
+</div>
+</div>
+
+
+</body>
+<script type="text/javascript">
+function initGoogleAPI(data) {
+
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYgbAra4lExeoIC-2Qog9yvp12gatHY5U&callback=initGoogleAPI&libraries=places,geometry;"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="js/index_history.js"></script>
+<script type="text/javascript" src="js/main_history.js?ver=2"></script>
+<script type="text/javascript" src="request.js"></script>
+<script type="text/javascript">
+var name = localStorage.getItem("name")
+
+postRequest('http://localhost:3000/users/get', {
+    user: name
+}) //TODO change to username variable
+.then(response => response.json())
+.then(data => {
+
+    function getAge(dateString) {
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
+    var userInfo = data.data;
+    var userAge = getAge(userInfo.dob);
+    var userMaxHR = (207 - (0.7 * userAge)).toFixed(0)
+    // var userAge
+    console.log(userInfo)
+
+    console.log(data)
+    document.getElementById("nameInfo").innerHTML = "<b>Name:</b> " + userInfo._id;
+    document.getElementById("ageInfo").innerHTML = "<b>Age:</b> " + userAge + " years old";
+    document.getElementById("weightInfo").innerHTML = "<b>Weight:</b> " + userInfo.weight + " kg";
+    document.getElementById("heightInfo").innerHTML = "<b>Height:</b> " + userInfo.height + " cm";
+    document.getElementById("maxHR").innerHTML = "<b>Maximum Heart Rate:</b> " + userMaxHR + " bpm"; //Based on Gellish's heart rate formula.  DOI: 10.1097/mss.0b013e31803349c6
+})
+.catch(error => console.error(error))
+
+postRequest('http://localhost:3000/races/get', {
+    user: name
+}) //TODO change to username variable
+.then(response => response.json())
+.then(data => {
+
+    var raceInfo = data.data.races
+    var numberRaces = raceInfo.length
+    var date = raceInfo.date;
+    var time = raceInfo.time;
+    var duration = raceInfo.duration;
+
+    console.log(data)
+
+    document.getElementById("raceNoInfo").innerHTML = "<b>Number of Races:</b> " + numberRaces + " races";
+    document.getElementById("lastRaceInfo").innerHTML = "<b>Last Race:</b> " + raceInfo[numberRaces - 1].date;
+    calcRoute(raceInfo[numberRaces - 1].origin[0] + "," + raceInfo[numberRaces - 1].origin[1], raceInfo[numberRaces - 1].destination[0] + "," + raceInfo[numberRaces - 1].destination[1], 1)
+
+    //Calendar here
+    const withoutTime = (date => {
+        date.setHours(0, 0, 0, 0);
+        return date;
+    })
+
+
+    YUI().use('calendar', 'datatype-date', 'cssbutton', function(Y) {
+
+        // Create a new instance of calendar, placing it in
+        // #mycalendar container, setting its width to 340px,
+        // the flags for showing previous and next month's
+        // dates in available empty cells to true, and setting
+        // the date to today's date.
+        var calendar = new Y.Calendar({
+            contentBox: "#mycalendar",
+            width: '340px',
+            showPrevMonth: true,
+            showNextMonth: true,
+            date: new Date()
+        }).render();
+
+        // Get a reference to Y.DataType.Date
+        var dtdate = Y.DataType.Date;
+
+        // Listen to calendar's selectionChange event.
+        calendar.on("selectionChange", function(ev) {
+            const selectedDate = (ev.newSelection[0]);
+            const testDate = new Date(selectedDate);
+            const targetDate = testDate.toISOString().split('T')[0];
+            console.log(selectedDate)
+            console.log(testDate.toISOString())
+            let hide = true;
+
+            postRequest('http://localhost:3000/races/get', {user: name}) //TODO change user name
+            .then(resp => resp.json())
+            .then(data => {
+                var workData = data.data;
+                var races = workData.races; // array
+
+                var filteredRace = races.filter(i => i.date === targetDate)[0];
+                console.log(filteredRace)
+                document.getElementById("date").innerHTML = filteredRace.date
+                document.getElementById("time").innerHTML = filteredRace.time
+                document.getElementById("duration").innerHTML = filteredRace.duration+" min"
+                document.getElementById("newDistance").innerHTML = filteredRace.distance+ " mi"
+
+            })
+
+
+            // Get the date from the list of selected
+            // dates returned with the event (since only
+            // single selection is enabled by default,
+            // we expect there to be only one date)
+            var newDate = ev.newSelection[0];
+
+            // Format the date and output it to a DOM
+            // element.
+        });
+
+
+        // When the 'Show Previous Month' link is clicked,
+        // modify the showPrevMonth property to show or hide
+        // previous month's dates
+        // Y.one("#togglePrevMonth").on('click', function(ev) {
+        //     ev.preventDefault();
+        //     calendar.set('showPrevMonth', !(calendar.get("showPrevMonth")));
+        // });
+
+        // When the 'Show Next Month' link is clicked,
+        // modify the showNextMonth property to show or hide
+        // next month's dates
+        // Y.one("#toggleNextMonth").on('click', function(ev) {
+        //     ev.preventDefault();
+        //     calendar.set('showNextMonth', !(calendar.get("showNextMonth")));
+        // });
+    });
+
+
+})
+.catch(error => console.error(error))
+
+  document.body.style.backgroundImage = "url(css/uiimage.jpg)";
+  document.body.style.backgroundColor = "rgb(0, 0, 0, 0.5)";
+</script>
+
+</html>

@@ -1,0 +1,233 @@
+/*general*/
+body {
+  background: #fff;
+  color: #666666;
+  font-family: "Open Sans", sans-serif;}
+a {
+  color: #2dc997;}
+a:hover, a:active, a:focus {
+  color: #2dca98;
+  outline: none;
+  text-decoration: none;}
+p {
+  padding: 0;
+  margin: 0 0 30px 0;}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  margin: 0 0 20px 0;
+  padding: 0;}
+/*header*/
+#header {
+  padding: 30px 0;
+  height: 92px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  transition: all 0.5s;
+  z-index: 997;}
+#header #logo {
+  float: left;}
+#header #logo h4 {
+  font-size: 13px;
+  margin: 0;
+  padding: 6px 0;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: white;}
+#header.header-fixed {
+  background: rgba(29, 53, 92, 0.9);
+  padding: 20px 0;
+  height: 72px;
+  transition: all 0.5s;}
+/*banner*/
+#banner {
+  display: table;
+  width: 100%;
+  height: 100vh;
+  background: url(../img/freedom.jpg) top center fixed;
+  background-size: cover;}
+#banner .banner-container {
+  background: rgba(0, 0, 0, 0.6);
+  display: table-cell;
+  margin: 0;
+  padding: 0 10px;
+  text-align: center;
+  vertical-align: middle;}
+#banner h1 {
+  margin: 30px 0 10px 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  text-transform: uppercase;
+  color: #fff;}
+@media (max-width: 768px) {
+  #banner h1 {
+    font-size: 28px;
+    line-height: 36px;}}
+#banner h2 {
+  color: #eee;
+  margin-bottom: 50px;
+  font-size: 24px;}
+@media (max-width: 768px) {
+  #banner h2 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;}}
+/*nav*/
+.nav-menu, .nav-menu * {
+  margin: 0;
+  padding: 0;
+  list-style: none;}
+.nav-menu ul {
+  position: absolute;
+  display: none;
+  top: 100%;
+  left: 0;
+  z-index: 99;}
+.nav-menu li {
+  position: relative;
+  white-space: nowrap;}
+.nav-menu > li {
+  float: left;}
+.nav-menu li:hover > ul,
+.nav-menu li.sfHover > ul {
+  display: block;}
+.nav-menu ul ul {
+  top: 0;
+  left: 100%;}
+.nav-menu ul li {
+  min-width: 180px;}
+#nav-menu-container {
+  float: right;
+  margin: 0;}
+@media (max-width: 768px) {
+  #nav-menu-container {
+    display: none;}
+}
+.nav-menu a {
+  padding: 0 8px 10px 8px;
+  text-decoration: none;
+  display: inline-block;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 13px;
+  outline: none;}
+.nav-menu > li {
+  margin-left: 10px;}
+.nav-menu > li > a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #2dc997;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;}
+.nav-menu a:hover:before, .nav-menu li:hover > a:before, .nav-menu .menu-active > a:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);}
+.nav-menu ul {
+  margin: 4px 0 0 0;
+  border: 1px solid #e7e7e7;}
+.nav-menu ul li {
+  background: #fff;}
+.nav-menu ul li:first-child {
+  border-top: 0;}
+.nav-menu ul li a {
+  padding: 10px;
+  color: #333;
+  transition: 0.3s;
+  display: block;
+  font-size: 13px;
+  text-transform: none;}
+.nav-menu ul li a:hover {
+  background: #2dc997;
+  color: #fff;}
+.nav-menu ul ul {
+  margin: 0;}
+#mobile-nav-toggle {
+display: none;}
+#mobile-nav {
+display: none;}
+/*text formating*/
+.section-header .section-title {
+  font-size: 32px;
+  color: #111;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 5px;}
+.section-header .section-description {
+  text-align: center;
+  color: #999;}
+
+#banner{
+  background-image:url('uiimage.jpg');
+
+}
+body {
+  background-image:url('bodyimage.jpeg');
+}
+
+#profile {
+  width:auto;
+  height:auto;
+  text-align: center;}
+
+#history {
+  width:auto;
+  height:auto;
+  text-align: center;}
+
+#route {
+    width:auto;
+    height:auto;
+    text-align: center;}
+
+#scoreboard {
+        width:auto;
+        height:auto;
+        text-align: center;}
+
+#upcoming {
+      width:auto;
+      height:auto;
+      text-align: center;}
+
+
+
+#call-to-action {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../img/Freedom.jpg) fixed center center;
+  background-size: cover;
+  padding: 80px 0;}
+#call-to-action .cta-title {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 700;}
+#call-to-action .cta-text {
+  color: #fff;}
+
+/*foot*/
+#footer {
+  background: rgb(29, 53, 92);
+  padding: 30px 0;
+  color: #fff;
+  font-size: 14px;}
+#footer .copyright {
+  text-align: center;}
+#footer .credits {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #ccc;}

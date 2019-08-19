@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <link rel = "stylesheet" type = "text/css" href = "history.css" />
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+    	crossorigin="anonymous">
+    	<link rel="stylesheet" type="text/css" href="css/main2.css?ver=3">
+    	<link rel="stylesheet" href="css/style.css">
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <!--Fav Icon-->
+        <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/8/86/Cycling_%28road%29_pictogram.svg" type="image/x-icon"/>
+
+        <title></title>
+    </head>
+    <body>
+        <h2 style="color: white; padding-left: 50px;    text-align: center;">HISTORY</h2>
+
+        <div class="container" id="map" style="width:100%;height: auto;">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-2" id="list">
+                        <ul>
+                        </ul>
+                </div>
+                <div class="col-sm-6" style="    padding-left: 0px;">
+                    <div id="map-canvas" style="width:100%">
+
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+            <div class="row">
+                <div class="row justify-content-sm-center">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2" id="stats" style="height: 350px;background-color: rgb(0, 0, 0, 0.5); color:white; padding:20px; padding-left:50px">
+                        <div id="dateStats"><b>Date:</b></div>
+                        <div id="timeStats"><b>Time:</b></div>
+                        <div id="raceTypeStats"><b>Type:</b></div>
+                        <div id="avgSpeedStats"><b>Average Speed:</b></div>
+                        <div id="distanceStats"><b>Distance:</b></div>
+                        <div id="durationStats"><b>Duration:</b></div>
+                        <div id="avgHeartrateStats"><b>Average Heart Rate:</b></div>
+                        <a href="profile.html" button class="btn btn-primary" type="submit" id="profileBtn" style="margin-top:10px" >Back to Profile</a>
+                    </div>
+                    <div class="col-sm-4" style="height: 350px;background-color:rgb(0, 0, 0, 0.5)">
+                        <div class="chart hide" id="elevation_chart"></div>
+                    </div>
+                    <div class="col-sm-4" style="height: 350px;background-color:rgb(0, 0, 0, 0.5)">
+                        <div class="chart hide" id="slope_chart"></div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+            </div>
+</div>
+
+
+    </body>
+    <script type="text/javascript">
+        function initGoogleAPI(data) {
+            console.log(data)
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYgbAra4lExeoIC-2Qog9yvp12gatHY5U&callback=initGoogleAPI&libraries=places,geometry;"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script  src="js/index_history.js"></script>
+    <script type="text/javascript" src="js/main_history.js?ver=2"></script>
+    <script type = "text/javascript" src = "request.js"></script>
+    <script type="text/javascript">
+        postRequest('http://localhost:3000/races/get', {user: localStorage.getItem("name")}) //TODO change to username variable
+        .then(response => response.json())
+        .then(data => {
+
+            for (var i = 0; i < data.data.races.length; i++) {
+                var race = data.data.races[i];
+                // console.log(race)
+                var item = $("<li>").html(race.date).data("index", i)
+
+                item.on("click", function () {
+                    var index = $(this).data("index");
+                    var myrace = data.data.races[index];
+
+                    // console.log(myrace);
+
+                    calcRoute(myrace.origin[0]+","+myrace.origin[1], myrace.destination[0]+","+myrace.destination[1], 1)
+
+                    var sp = 0;
+                    if (myrace.duration > 0) {
+                        // console.log("test")
+                        sp = ((myrace.distance*60.0/myrace.duration));
+                    }
+
+                    document.getElementById("dateStats").innerHTML = "<b>Date: </b>"+ myrace.date;
+                    document.getElementById("timeStats").innerHTML = "<b>Time: </b>"+ myrace.time;
+                    document.getElementById("avgSpeedStats").innerHTML = "<b>Average Speed:</b> "+ (sp).toFixed(2) + " mph";
+                    document.getElementById("distanceStats").innerHTML = "<b>Distance: </b>"+ myrace.distance +" mi";
+                    document.getElementById("durationStats").innerHTML = "<b>Duration:</b> "+ myrace.duration +" min" ;
+                    document.getElementById("avgHeartrateStats").innerHTML = "<b>Average Heart Rate: </b>"+ myrace.avg_heartrate +" bpm" ;
+                    document.getElementById("raceTypeStats").innerHTML = "<b>Type:</b> "+ myrace.type;
+
+
+                })
+                $("#list > ul").append(item);
+            }
+          console.log(data)
+
+
+
+        })
+        .catch(error => console.error(error))
+        document.body.style.backgroundImage = "url(css/uiimage.jpg)";
+        document.body.style.backgroundColor = "rgb(0, 0, 0, 0.5)";
+
+    </script>
+</html>

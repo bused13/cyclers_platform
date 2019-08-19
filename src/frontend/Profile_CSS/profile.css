@@ -1,0 +1,65 @@
+
+
+/* ==============================
+
+GENERAL VALUES:
+
+
+=================================*/
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+h2 {
+    margin: 20px 20px 20px 20px;
+
+}
+
+#map-canvas {
+    margin-left: auto;
+    margin-right: auto;
+
+}
+#map {
+    margin: 30px 30px 30px 30px;
+    /* border: outset;  */
+}
+
+#rightcolumn {
+    margin: 20px 20px 20px 20px;
+}
+
+#avatar {
+    margin: 10 10 10 50;
+}
+
+#map {
+    background-color: rgb(0, 0, 0, 0.5);
+    padding-left: 30px;
+    padding-bottom: 10px;
+    border: solid blue;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white
+}
+
+#h2 {
+    background-color: #5397f4;
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px
+}
+
+#calendar {
+    background-color: #5397f4;
+    position: relative;
+    width: 343px;
+    border-radius: 20px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border: solid
+}
+#myBtns {
+text-align: center
+}

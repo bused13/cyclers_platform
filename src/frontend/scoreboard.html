@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8"/>
+<head>
+<script src="https://d3js.org/d3.v5.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+</head>
+
+<style>
+  .bar{
+    fill: steelblue;
+  }
+
+  .bar:hover{
+    fill: gold;
+  }
+
+	.axis {
+	  font: 10px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+  .container {
+    background-image:url("recordboardimage.jpeg");
+    background-repeat:no-repeat;
+    background-size: 1200px 300px ;
+    opacity:1.0;
+  }
+
+  .container{
+    position:relative;
+  }
+
+  .container img{
+    position:absolute;
+    bottom:0;
+    opacity:0.3;
+  }
+  #profileBtn:hover{
+    background-color: #697487!important;
+    cursor: pointer!important;
+  }
+
+</style>
+<body>
+
+	<h3>All longest distance:<span  id="all-dist"></span><h3>
+	<h3>All max speed:<span  id="max-speed"></span><h3>
+	<h3 >All longest hours:<span id="total-hours"></span><h3>
+  <div class="container">
+    <img src="recordboardimage.jpeg">
+  </div>
+  <script type = "text/javascript" src = "request.js"></script>
+<script>
+// set the dimensions of the canvas
+var margin = {top: 40, right: 20, bottom: 70, left: 40},
+    width = 1100 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+
+// add the SVG element
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+      var allspeeds=[]
+      var alldistances=[]
+      var allduration=[]
+      var alldates=[]
+      var modifieddates=[]
+
+      postRequest('http://localhost:3000/races/get', {user: localStorage.getItem("name")}) //TODO change to username variable
+          .then(response => response.json())
+          .then(data => {
+
+       var data_points = data.data.races;
+       console.log(data_points[0])
+			data_points.forEach(function(d){
+        d.date=d.date
+        d.distance=+d.distance;
+				alldistances.push(d.distance)
+				allduration.push(d.duration)
+        alldates.push(d.date)
+    });
+
+  for (n=0;n<alldates.length;n++){
+      var newdate=alldates[n].replace(/[^0-9]/g,"")
+      var finaldate=parseInt(newdate)
+        modifieddates.push(finaldate)
+                                }
+       console.log(modifieddates)
+
+		 for (i=0;i<alldistances.length;i++){
+      for(j=0;j<allduration.length;j++){
+		      if(i==j){
+            allspeeds.push(alldistances[i]/allduration[j])
+				//			console.log(allspeeds)
+                  }
+				                          }
+			                                  }
+   var maxspeed=Math.max.apply(null,allspeeds)
+	       console.log(maxspeed)
+   var maxdistance=Math.max.apply(null,alldistances)
+	       console.log(maxdistance)
+   var maxhour=Math.max.apply(null,allduration)
+	       console.log(maxhour)
+   var dateExtent=d3.extent(modifieddates)
+      console.log(dateExtent)
+
+var x=d3.scaleTime()
+         .domain([0,alldates.length])
+         .range([0,width]);
+
+ svg.append("g")
+    .attr("class","x axis")
+    .attr("transform","translate(0,"+height+")")
+    .call(d3.axisBottom(x)
+               .tickFormat(function(d, i){
+                return alldates[i]
+               }))
+//https://stackoverflow.com/questions/11772115/d3-using-strings-for-axis-ticks for matching the scale of x-axis with the dates
+
+svg.append("text")
+   .attr("text-anchor","end")
+   .attr("x",width)
+   .attr("y",height+30)
+   .text("Date");
+
+var distanceextent=d3.extent(alldistances)
+  console.log(distanceextent)
+var y=d3.scaleLinear()
+           .domain([0,distanceextent[1]])
+           .range([height,0]);
+
+svg.append("g")
+.call(d3.axisLeft(y));
+
+svg.append("text")
+.attr("text-anchor","end")
+.attr("x",-20)
+.attr("y",-20)
+.text("Distance")
+.attr("text-anchor","start")
+
+
+svg.selectAll(".bar")
+    .data(alldistances).enter()
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d,i) { return i*(width/data_points.length)+1 })
+    .attr("width", 60)
+    .attr("y", function(d,i) { return y(d)})
+    .attr("height", function(d,i) { return height-y(d)});
+
+  document.getElementById("all-dist").innerText=maxdistance;
+	document.getElementById("max-speed").innerText=maxspeed;
+	document.getElementById("total-hours").innerText=maxhour;
+})
+.catch(error => console.error(error))
+</script>
+
+<a href="profile.html"><button type="button" id="profileBtn" style="background-color: #337ab7;
+border: none;
+color: white;
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+border-radius: 4px">Back to Profile</button></a>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+[
+    {
+        "date":"2011-04-11",
+        "speed":25,
+        "dist":32,
+        "evaluation":40
+    },
+    {
+        "date":"2011-04-12",
+        "speed":22,
+        "dist":43,
+        "evaluation":10
+    },
+    {
+        "date":"2011-04-13",
+        "speed":14,
+        "dist":11,
+        "evaluation":50
+    },
+    {
+        "date":"2011-04-14",
+        "speed":23,
+        "dist":40,
+        "evaluation":5
+    }
+]

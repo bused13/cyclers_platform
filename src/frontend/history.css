@@ -1,0 +1,23 @@
+#list {
+    /* width: 100%; */
+    overflow: auto;
+    overflow-x: hidden;
+    height: 350px;
+    border: 1px blue solid;
+    background-color: rgb(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px
+}
+
+#list > ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+#list > ul > li{
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+#list > ul > li:hover{
+    background-color: #eee;
+}

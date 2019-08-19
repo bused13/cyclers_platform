@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/main2.css?ver=3">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+	<script  src="js/index_history.js"></script>
+	<title>Add Race</title>
+
+	<!--Fav Icon-->
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/8/86/Cycling_%28road%29_pictogram.svg" type="image/x-icon"/>
+	<style media="screen">
+		input, select{
+			margin-bottom: 10px;
+			color: #000;
+		}
+
+		form #from-to-switcher{
+			margin-left: 110px;
+			filter: invert(1);
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-2"></div>
+		<div class="col-xs-12 col-sm-8" style="background: rgb(0, 0, 0, 0.5); color: white; text-align:centers">
+			<h1>Add Race</h1>
+			<b>Date:</b> <input type="date" id="date">
+			<b>Time:</b> <input type="time" id="time"><br>
+			<b>Type:</b> <select id="type">
+						<option value="Ultra–distance Cycle Race">Ultra–distance Cycle Race</option>
+					  	<option value="Road Race">Road Race</option>
+						<option value="Daily Commute">Daily Commute</option>
+						<option value="Mountain Biking">Mountain Biking</option>
+					  	<option value="BMX Racing">BMX Racing</option>
+					</select> <br>
+			<b>Average Speed:</b> <input type="text" id="avgSpeed"> mph<br>
+			<b>Average Heart Rate:</b> <input type="text" id="avgHR"> bpm<br>
+			<b>Duration:</b> <input type="text" id="addedDuration"> min<br>
+			<b>Distance:</b> <span id="distance"><br>
+		</div>
+		<div class="col-xs-12 col-sm-2"></div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-2"></div>
+		<div class="col-xs-12 col-sm-8" style="background: rgb(0, 0, 0, 0.5); padding-bottom: 20px">
+			<form id="routes">
+				<div id="target" class="place-inputs">
+					<div class="place-input">
+						<input id="from" type="text" placeholder="Type a place to start your journey">
+					</div>
+					<div id="from-to-switcher"></div>
+					<div class="place-input">
+						<input id="to" type="text" placeholder="Type your destination">
+					</div>
+					<div class="place-input" style="padding-top: 20px">
+						<button class="btn btn-primary" type="submit" id="pick">1.Pick Locations</button>
+						<button class="btn btn-primary" type="submit" id="add" onClick="addRace()">2.Add Race</button>
+						<a href="profile.html" button class="btn btn-primary" type="submit" id="profileBtn" >Back to Profile</a>
+
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-12 col-sm-2"></div>
+
+	</div>
+	<div class="row">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-10" style="padding: 10px;">
+			<div  id="map-canvas" style="width: 100%;"></div>
+		</div>
+		<div class="col-sm-1"></div>
+	</div>
+	<div class="row" id="elevation_slope">
+		<div class="col-sm-6" >
+			<div class="chart hide" id="elevation_chart" style="margin: auto;"></div>
+		</div>
+
+		<div class="col-sm-6" >
+			<div class="chart hide" id="slope_chart" style="margin: auto;"></div>
+		</div>
+	</div>
+	<div class="row place-input selector-wrapper" style="visibility:hidden">
+		<div class="col-xs-6">
+			<select class="form-control" id="measurement-mode">
+				<option value="miles">Miles</option>
+			</select>
+		</div>
+		<div class="col-xs-6">
+			<select class="form-control" id="travel-mode">
+				<option>Bicycling</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+<script>
+	function initGoogleAPI() {
+
+	}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYgbAra4lExeoIC-2Qog9yvp12gatHY5U&callback=initGoogleAPI&libraries=places,geometry;"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="request.js"></script>
+<script type="text/javascript" src="js/main.js?ver=2"></script>
+<script type="text/javascript">
+
+
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	if(dd<10) { dd='0' +dd } if(mm<10){ mm='0' +mm } today=yyyy+'-'+mm+'-'+dd; document.getElementById("date").setAttribute("max", today);
+
+	var date = [];
+	var time = [];
+	var type = [];
+	var avgSpeed = [];
+	var avgHR = [];
+	var addeDuration = [];
+	var newDistance = [];
+	var origin = [];
+	var destination = [];
+
+	function addRace() {
+		if (document.getElementById("date").value=="" || document.getElementById("type").value=="" || document.getElementById("time").value=="" || document.getElementById("avgSpeed").value=="" || document.getElementById("avgHR").value=="" || document.getElementById("addedDuration").value==""){
+			alert("Please input all the informations")
+		}else{
+		date = document.getElementById("date").value
+		time = document.getElementById("time").value
+		type = document.getElementById("type").value
+		avgSpeed = +document.getElementById("avgSpeed").value
+		avgHR = +document.getElementById("avgHR").value
+		addedDuration = +document.getElementById("addedDuration").value
+		newDistance = +distance.text.replace(/\D+$/g, "")
+
+		var user = localStorage.getItem("name");
+
+		/// IF validate data
+		postRequest('http://localhost:3000/races/add', {
+				user: user,
+				origin: start_location,
+				destination: end_location,
+				date: date,
+				time: time,
+				duration: addedDuration,
+				distance: newDistance,
+				avg_heartrate: avgHR,
+				type: type
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data)
+				// if (data.success)
+				// 	window.location.href = "FirstPage.html";
+			})
+			.catch(error => console.error(error))
+
+			alert("Race added")
+			window.location.href = "profile.html"
+		}
+	}
+	document.body.style.backgroundImage = "url(css/uiimage.jpg)";
+	document.body.style.backgroundColor = "rgb(0, 0, 0, 0.5)";
+
+
+
+</script>
+</body>
+
+</html>

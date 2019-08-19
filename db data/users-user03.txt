@@ -1,0 +1,8 @@
+{
+  "_id": "user03",
+  "_rev": "1-6a41bbeeba01c6bc65a3fd1d006c4249",
+  "password": "1234",
+  "dob": "1997/08/19",
+  "height": 184,
+  "weight": 75
+}

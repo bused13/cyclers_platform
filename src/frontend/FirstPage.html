@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Online Cycling Platform</title>
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="css/styleUI.css" rel="stylesheet">
+</head>
+<body>
+  <!--header-->
+  <header id="header">
+    <div class="container">
+      <div id="logo" class="pull-left">
+        <h4>Online Cycling Platform</h4>
+      </div>
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+            <li class="menu-active"><a href="#banner">Home</a></li>
+            <li><a href="#profile">Login</a></li>
+            <!-- <li><a href="#history">Cycling history</a></li>
+            <li><a href="#route">Plan route </a></li>
+            <li><a href="#scoreboard">Scoreboard</a></li>
+            <li><a href="#upcoming">Calendar</a></li> -->
+          </ul>
+      </nav>
+  </div>
+ </header>
+ <!--Banner Section-->
+   <section id="banner">
+     <div class="banner-container">
+  <h1>Online Cyling Platform</h1>
+  <h2>Record your cycling activities, plan your route, and view upcoming events.</h2>
+     </div>
+   </section>
+
+   <main id="main">
+
+     <!--profile-->
+     <section id="profile" style="margin: 45px;">
+          <div class="container wow fadeIn" style="margin: 0px;width: 100%;max-width: none;padding: 0px;">
+
+            <div style=" overflow:hidden;">
+            <header>
+                <meta charset = "utf-8">
+                <Title> CS5003 Practical 3 - Cycling Platform </title>
+                <link rel = "stylesheet" type = "text/css" href = "css/login.css" />
+
+                <!--Fav Icon-->
+                <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/8/86/Cycling_%28road%29_pictogram.svg" type="image/x-icon"/>
+            </header>
+
+            <body>
+               <div class = content>
+                  <h1>Cycling Platform </h1>
+                  <span>USERNAME</span><br>
+                  <input type = "text" id = "username"></input><br><br>
+                  <span>PASSWORD</span><br>
+                  <input type = "password" id = "password"></input><br>
+                  <br><br>
+                  <button type = "button" id = "startBtn" onclick = "start()">Log In</button><br><br>
+                  <a href = "register.html"><button type = "button" id = "registerBtn">Register</button></a><br><br> <p></p>
+                  <div id='error-message'>
+
+                  </div>
+               </div>
+                <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+               <script type = "text/javascript" src = "js/login.js"></script>
+               <script type = "text/javascript" src = "request.js"></script>
+            </body>
+
+            <video autoplay muted loop id="bgVideo"> <source src="video/login.mp4" type="video/mp4"> </video>
+            </div>
+
+          </div>
+     </section>
+
+
+
+
+    <!--footer-->
+      <footer id="footer">
+        <div class="container">
+          <div class="credits">
+            <strong><p>Online Cycling Platform  -By CS5003 Practical 3 group B</p></strong>
+          </div>
+        </div>
+      </footer><!-- #footer -->
+
+</body>
+</html>
